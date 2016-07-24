@@ -42,9 +42,6 @@ BasicWindow& BasicWindow::operator=(const BasicWindow& bw){
 */
 WINDOW* BasicWindow::createNewContainer() {
 	this->container = newwin(height, width, starty, startx);
-	/*box(this->container, 0 , 0);		/* 0, 0 gives default characters 
-					 					* for the vertical and horizontal
-					 					* lines			*/
 	wrefresh(this->container);		/* Show that box 		*/
 
 	return getContainer();
@@ -81,19 +78,20 @@ bool BasicWindow::writeString(int x, int y, const char* message) {
 	if(!isInLimits(x, y))
 		return false;
 
-	mvwprintw(this->container, x, y, message);
+	mvwprintw(this->container, y, x, message);
+	return true;
 }
 
 bool BasicWindow::writeNumber(int x, int y, int message) {
-	writeNumber(x, y, (long) message);
+	return writeNumber(x, y, (long) message);
 }
 
 bool BasicWindow::writeNumber(int x, int y, double message) {
-	writeNumber(x, y, (long double) message);
+	return writeNumber(x, y, (long double) message);
 }
 
 bool BasicWindow::writeNumber(int x, int y,float message) {
-	writeNumber(x, y, (long double) message);
+	return writeNumber(x, y, (long double) message);
 }
 
 bool BasicWindow::writeNumber(int x, int y, long message) {

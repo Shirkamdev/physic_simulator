@@ -8,9 +8,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//he, wi, stx, sty
-	BasicWindow bw = BasicWindow(20, 80, 0, 0);
-	ColorWindow cw = ColorWindow(20, 80, 0, 0);
-
+	//BasicWindow bw = BasicWindow(20, 80, 0, 0);
 
 	initscr();			/* Start curses mode 		*/
 	cbreak();			/* Line buffering disabled, Pass on
@@ -18,7 +16,9 @@ int main(int argc, char** argv) {
 	keypad(stdscr, TRUE);
 	start_color();
 
-	WINDOW* container;
+	ColorWindow cw = ColorWindow(20, 80, 0, 0);
+
+	//WINDOW* container;
 	/*
 	container = bw.createNewContainer();
 	bw.writeString(0, 10, "Hello Everyone!!");
@@ -28,9 +28,14 @@ int main(int argc, char** argv) {
 	bw.~BasicWindow();
 	//endwin();*/
 
-	container = cw.createNewContainer();
-	int pair = cw.addColorPair(5, 7);
-	cw.writeStringWithColor(0, 10, "Hello everyone in color!!", pair);
+	cw.createNewContainer();
+	///int pair = cw.addColorPair(COLOR_RED, COLOR_BLACK);
+	bool success = cw.writeStringWithColor(10, 0, "Hello everyone in color!!", 1);
+	if(!success)
+		cw.writeString(10, 3, "Write with color failed :(");
+	success = cw.writeNumberWithColor(10, 1, 0.598702145646454684123, 2);
+	if(!success)
+		cw.writeString(10, 4, "Write with color (number) failed :(");
 	cw.refreshContainer();
 	sleep(2);
 	cw.~ColorWindow();
